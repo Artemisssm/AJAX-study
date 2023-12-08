@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>认识Promise</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 目标：使用Promise管理异步任务
+    */
+
+    // 1. 创建Promise对象
+    const p = new Promise((resolve, reject) => {
+      // 2. 执行异步任务
+      setTimeout(() => {
+        // 3.1. 如果异步任务成功了，调用resolve方法
+        // resolve('成功的数据')
+        reject(new Error('失败的数据'))
+      }, 1000)
+
+      // 3.2. 如果异步任务失败了，调用reject方法
+      // reject('失败的数据')
+    })
+
+    // 4. 使用Promise对象
+    p.then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+
+    // 5. Promise对象的状态
+    // 5.1. pending: 等待状态
+    // 5.2. resolved: 成功状态
+    // 5.3. rejected: 失败状态
+
+    // 6. Promise对象的状态只能改变一次
+    // 6.1. 如果异步任务成功了，就不能再失败了
+    // 6.2. 如果异步任务失败了，就不能再成功了
+
+    // 7. Promise对象的状态改变之后，就会调用then或者catch方法
+    // 7.1. 如果异步任务成功了，就会调用then方法
+    // 7.2. 如果异步任务失败了，就会调用catch方法
+  </script>
+</body>
+
+</html>

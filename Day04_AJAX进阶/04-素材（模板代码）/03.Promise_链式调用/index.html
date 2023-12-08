@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise_链式调用</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    /**
+     * 目标：掌握Promise的链式调用
+     * 需求：把省市的嵌套结构，改成链式调用的线性结构
+    */
+
+
+    const p = new Promise((resolve, reject) => {
+      // 获取省份
+      axios({ url: 'http://hmajax.itheima.net/api/province' }).then(result => {
+        // 获取第一个省份
+        const pname = result.data.list[0]
+        console.log(pname);
+        // 把第一个省份传递给下一个then
+        resolve(pname)
+      })
+    })
+    const p2 = p.then(result => {
+      dd = result
+      return new Promise((resolve, reject) => {
+        // 获取城市
+        axios({ url: 'http://hmajax.itheima.net/api/city', params: { pname: result } }).then(result => {
+          // 获取第一个城市
+          const cname = result.data.list[0]
+          console.log(cname);
+          // 把第一个城市传递给下一个then
+          resolve(cname)
+        })
+      }).then(result => {
+        return new Promise((resolve, reject) => {
+          // 获取地区
+          axios({ url: 'http://hmajax.itheima.net/api/area', params: { pname: dd, cname: result } }).then(result => {
+            // 获取第一个地区
+            const aname = result.data.list[0]
+            console.log(aname);
+            // 把第一个地区传递给下一个then
+          })
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>
